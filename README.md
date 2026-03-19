@@ -234,26 +234,6 @@ User refreshes page → updated quantity displayed.
 
 ---
 
-## 🚀 Future Improvements
-
-* Progress tracking for queue job
-* Bulk update query for performance
-* Real-time update (WebSocket)
-* Upload history tracking
-
----
-
-## 💬 Conclusion
-
-This project demonstrates:
-
-* Clean RESTful API design
-* Efficient background processing using Laravel Queue
-* Flexible data handling (Excel integration)
-* Scalable and maintainable architecture
-
----
-
 ## 👨‍💻 Author
 
 Developed by: *Safwan Ismail*
