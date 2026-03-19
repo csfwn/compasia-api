@@ -1,58 +1,259 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 Product Inventory Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 Overview
 
-## About Laravel
+This project is a **Product Inventory Management System** developed as part of a PHP Developer assessment.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The system allows users to:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* View product inventory
+* Search products by Product ID
+* Upload Excel file to update stock
+* Process data asynchronously using Laravel Queue
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Backend:** PHP Laravel 10
+* **Frontend:** Vue 3
+* **Database:** MySQL
+* **Architecture:** RESTful API + Queue
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 🎯 Features
 
-## Agentic Development
+### ✅ Product Listing
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+* Display all products from database
+* Backend pagination implemented
 
-```bash
-composer require laravel/boost --dev
+---
 
-php artisan boost:install
+### ✅ Search Filter
+
+* Filter by Product ID
+* Server-side filtering via API
+
+---
+
+### ✅ Excel Upload
+
+* Upload `.xlsx` file
+* Process data in background using Laravel Queue
+
+---
+
+### ✅ Inventory Update Logic
+
+| Status | Action          |
+| ------ | --------------- |
+| Sold   | Deduct quantity |
+| Buy    | Add quantity    |
+
+---
+
+### ✅ Flexible Excel Format (Advanced)
+
+* Auto-detect column using header (no hardcoded index)
+* Supports dynamic Excel structure
+
+---
+
+## 📊 Database Structure
+
+### product_master_lists
+
+| Column     | Type         |
+| ---------- | ------------ |
+| id         | PK           |
+| product_id | int (unique) |
+| type       | string       |
+| brand      | string       |
+| model      | string       |
+| capacity   | string       |
+| quantity   | int          |
+
+---
+
+## 🔌 API Endpoints
+
+### 📥 Get Products
+
+```http
+GET /api/product-master-lists
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Query Params:
 
-## Contributing
+```
+product_id=4450
+page=1
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### 📤 Upload Excel
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```http
+POST /api/product-master-lists/upload
+```
 
-## Security Vulnerabilities
+Body:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+form-data → file (.xlsx)
+```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🔄 System Flow
+
+```
+User Upload File (Vue)
+        ↓
+Laravel API Store File
+        ↓
+Dispatch Queue Job
+        ↓
+Queue Worker Process Excel
+        ↓
+Update Database
+        ↓
+Frontend Fetch Updated Data
+```
+
+---
+
+## 🧠 Use Case
+
+### 1. View Product List
+
+User accesses the system and views product inventory with pagination.
+
+---
+
+### 2. Search Product
+
+User enters Product ID → system filters data via API.
+
+---
+
+### 3. Upload Excel File
+
+User uploads product_status_list.xlsx → system processes file asynchronously.
+
+---
+
+### 4. Update Inventory
+
+* If status = Sold → quantity deducted
+* If status = Buy → quantity added
+
+---
+
+### 5. View Updated Data
+
+User refreshes page → updated quantity displayed.
+
+---
+
+## 📁 Sample Excel Format
+
+| Product ID | Types      | Brand | Model     | Capacity | Status |
+| ---------- | ---------- | ----- | --------- | -------- | ------ |
+| 4450       | Smartphone | Apple | iPhone SE | 2GB/16GB | Sold   |
+
+> Note: Quantity is assumed as **1 per row** (since not provided).
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone Project
+
+```bash
+git clone <your-repo-url>
+cd project-folder
+```
+
+---
+
+### 2. Install Dependencies
+
+```bash
+composer install
+npm install
+```
+
+---
+
+### 3. Setup Environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Update DB config in `.env`
+
+---
+
+### 4. Run Migration & Seeder
+
+```bash
+php artisan migrate --seed
+```
+
+---
+
+### 5. Run Queue
+
+```bash
+php artisan queue:work
+```
+
+---
+
+### 6. Run Server
+
+```bash
+php artisan serve
+npm run dev
+```
+
+---
+
+## ⚠️ Error Handling
+
+* Invalid file → rejected
+* Missing column → logged
+* Product not found → skipped
+* Negative quantity → prevented
+
+---
+
+## 🚀 Future Improvements
+
+* Progress tracking for queue job
+* Bulk update query for performance
+* Real-time update (WebSocket)
+* Upload history tracking
+
+---
+
+## 💬 Conclusion
+
+This project demonstrates:
+
+* Clean RESTful API design
+* Efficient background processing using Laravel Queue
+* Flexible data handling (Excel integration)
+* Scalable and maintainable architecture
+
+---
+
+## 👨‍💻 Author
+
+Developed by: *Safwan Ismail*
