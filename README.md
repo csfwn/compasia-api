@@ -13,6 +13,62 @@ The system allows users to:
 
 ---
 
+## ⚙️ Setup Instructions
+
+### 1. Clone Project
+
+```bash
+git clone https://github.com/csfwn/compasia-api.git
+cd project-folder
+```
+
+---
+
+### 2. Install Dependencies
+
+```bash
+composer install
+npm install
+```
+
+---
+
+### 3. Setup Environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Update DB config in `.env`
+
+---
+
+### 4. Run Migration & Seeder
+
+```bash
+php artisan migrate --seed
+```
+
+---
+
+### 5. Run Queue
+
+```bash
+php artisan queue:work
+```
+
+---
+
+### 6. Run Server
+
+```bash
+php artisan serve
+npm run dev
+```
+
+---
+
 ## 🛠️ Tech Stack
 
 * **Backend:** PHP Laravel 10
@@ -166,62 +222,6 @@ User refreshes page → updated quantity displayed.
 | 4450       | Smartphone | Apple | iPhone SE | 2GB/16GB | Sold   |
 
 > Note: Quantity is assumed as **1 per row** (since not provided).
-
----
-
-## ⚙️ Setup Instructions
-
-### 1. Clone Project
-
-```bash
-git clone <your-repo-url>
-cd project-folder
-```
-
----
-
-### 2. Install Dependencies
-
-```bash
-composer install
-npm install
-```
-
----
-
-### 3. Setup Environment
-
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-Update DB config in `.env`
-
----
-
-### 4. Run Migration & Seeder
-
-```bash
-php artisan migrate --seed
-```
-
----
-
-### 5. Run Queue
-
-```bash
-php artisan queue:work
-```
-
----
-
-### 6. Run Server
-
-```bash
-php artisan serve
-npm run dev
-```
 
 ---
 

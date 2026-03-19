@@ -9,10 +9,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Illuminate\Queue\InteractsWithQueue;
 class ProcessProductStatusJob implements ShouldQueue
 {
-    use Dispatchable, Queueable;
+    use Dispatchable, Queueable, InteractsWithQueue;
 
     public $tries = 1;
 
