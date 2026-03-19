@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductMasterListResource;
 use App\Jobs\ProcessProductStatusJob;
+use App\Jobs\ProductMasterQuantityUpdateJob;
 use App\Models\ProductMasterList;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class ProductMasterListController extends Controller
         $path = $request->file('file')->store('uploads', env('FILESYSTEM_DISK'));
 
         try {
-            ProcessProductStatusJob::dispatch($path);
+            ProductMasterQuantityUpdateJob::dispatch($path);
 
             return $this->apiResponse->message(__('File uploaded. Processing in background.'))->success();
         } catch (\Throwable $th) {
