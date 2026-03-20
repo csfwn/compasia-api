@@ -20,8 +20,7 @@ class ProductMasterQuantityUpdateImport implements ToCollection
         $statusIndex = $header->search('Status');
 
         if ($productIdIndex === false || $statusIndex === false) {
-            Log::error('Invalid Excel format');
-            return;
+            throw new \Exception('Invalid Excel format. Required columns: Product ID, Status');
         }
 
         // get product IDs

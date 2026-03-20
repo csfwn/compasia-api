@@ -36,6 +36,7 @@ class ProductMasterQuantityUpdateJob implements ShouldQueue
 
         } catch (\Throwable $e) {
             Log::error('Import failed: ' . $e->getMessage());
+            
             $this->fail($e);
         }
     }
